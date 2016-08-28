@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os
 import sys, io
 import re
@@ -186,7 +187,7 @@ def pwp_prompt( buffer ):
 def main( ):
 	if len(sys.argv[1:]) != 5:
 		out("Usage ./skzproxy.py [localhost] [localport] [remotehost] [remoteport] [recieve_first]", "#")
-		out("Example ./proxy.py 127.0.0.1 9999 10.12.132.1 9000 True", "#")
+		out("Example ./skzproxy.py 127.0.0.1 9999 10.12.132.1 9000 True", "#")
 		sys.exit( 0 )
 		
 	#setup local host listening parameters
