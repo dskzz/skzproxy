@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import os
 import sys, io
 import re
@@ -174,8 +173,10 @@ def inet_send_the_packet( ):
 	except:
 		None
 	
-	
+	print "\n"
 	print "Attempting to send "+ str( len( bin_stream) ) + " bytes to "+target_ip + ":"+str(target_port)
+	hexdump(bin_stream)
+	
 	if sock is None:
 		inet_setup_networking( )
 				
@@ -283,14 +284,20 @@ def hexdump_stream( src, length=16):
 		result.append( b"%04X %-*s %s" % (i, length*(digits + 1), hexa, text) )
 	print b'\n'.join(result)
 
-def hexdump_to_string( src, length=16 ):
+def hexdump_to_string( src, range=0, length=16 ):
 	result = [ ]
 	digits = 4 if isinstance(src, unicode) else 2
-	for i in xrange(0, len(src), length):
+	
+	len_to_print = len(src)
+	if ( range > 0 ):
+		print range
+		len_to_print = range
+	for i in xrange(0, len_to_print, length):
 		s = src[i:i+length]
 		hexa = b' '.  join( ["%0*X" % ( digits, x ) for x in s] )
 		
-	return hexa
+		result.append( b"%-*s" % (length*(digits + 1), hexa) )
+	return b'\n'.join(result)
 
 def edit_restore_packet( ):
 	global bin_stream, bin_stream_original
@@ -321,7 +328,7 @@ def edit_packet( ):
 	global bin_stream
 	prompt = 	"Enter new string.  Type x or X for each byte to remain same or new val. "
 	prompt +=	"If you shorten str, will fill with existing vals. Blank ret when done\n"
-	prompt +=	 " " + hexdump_to_string( bin_stream ) + "\n>"
+	prompt +=	 " " + hexdump_to_string( bin_stream, 16 ) + "\n>"
 	
 	mod = raw_input( prompt)
 	if mod == "":
