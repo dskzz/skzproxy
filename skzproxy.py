@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import os
 import sys, io
 import re
@@ -14,6 +13,7 @@ packet_info_source = 'sender'
 packet_info_number = '1'
 
 packet_count = 0
+current_packet = 0
 
 binstr = None
 binstr_originial = None
@@ -30,7 +30,8 @@ master_high_byte = "8"
 
 max_bytes = None
 
-fast_forward = None
+ff_target = 0
+ff_all = None
 
 save_dir = '/root/Desktop/pentest/tools/skzproxy/save_packets'
 
@@ -65,7 +66,7 @@ def server_loop( local_host, local_port, remote_host, remote_port, receive_first
 
 
 def proxy_handler( client_socket, remote_host, remote_port, receive_first ):
-	global packet_count
+	global packet_count, ff_all
 	# connect to the remote host
 	remote_socket = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 	remote_socket.connect( (remote_host,remote_port) )
@@ -124,6 +125,7 @@ def proxy_handler( client_socket, remote_host, remote_port, receive_first ):
 			client_socket.close( )
 			remote_socket.close( )
 			out("Nore more data. Closing", "*")
+			ff_all = None
 			break
 			
 		
@@ -168,17 +170,31 @@ def response_handler( buffer ):
 	return pwp_prompt( buffer )
 		
 def pwp_prompt( buffer ):
-	global fast_forward, packet_count
-	string = "Press enter to continute, X to play w/ packet, # to fast forward, q to quit"
-	control = raw_input( string )
+	global ff_target, ff_all, packet_count, current_packet
+	
+	if ff_all is not True: 
+		string = "Enter to continue, X to play w/ packet, f# or f to fast forward, q to quit, N for name >"
+		control = raw_input( string )
+	else:
+		return buffer
+	current_packet += 1
 	
 	if control == 'X' or control == 'x':
 		return __play_with_a_packet( packet_count, buffer )
+		
+	elif control == 'f' or control == 'F' or control == 'ff' or control == 'FF':
+		ff_all = True
+		return buffer
+	elif control == 'n' or control == 'N':
+		pick_new_project_name( )
+		pick_new_action_name( )
+		return pwp_prompt( buffer )
+	
 	elif control == 'q' or control == 'Q':
 		os._exit(0)
 	elif isinstance( control, int):
-		fast_forward = control
-		print "Fast forward to " + fast_forward
+		ff_target = control
+		print "Fast forward to " + ff_target
 		return buffer
 	else:
 		return buffer
@@ -187,7 +203,7 @@ def pwp_prompt( buffer ):
 def main( ):
 	if len(sys.argv[1:]) != 5:
 		out("Usage ./skzproxy.py [localhost] [localport] [remotehost] [remoteport] [recieve_first]", "#")
-		out("Example ./skzproxy.py 127.0.0.1 9999 10.12.132.1 9000 True", "#")
+		out("Example ./proxy.py 127.0.0.1 9999 10.12.132.1 9000 True", "#")
 		sys.exit( 0 )
 		
 	#setup local host listening parameters
@@ -306,7 +322,7 @@ def run_packet( ):
 			save_master_range( )
 			new_line
 			
-		elif mode == 'H' or mode == 'h' or mode == 'P' or mode == 'p':
+		elif mode == 'H' or mode == 'h' or mode == 'P' or mode == 'p' or mode =='V' or mode =='v':
 			printer( 'hex' )
 			new_line( )
 			
@@ -406,7 +422,7 @@ def process_edit( line ):
 def print_info():
 	global packet_info_source, packet_info_number, packet_info_action_name
 	global only_byte, low_byte, high_byte, max_bytes
-	global save_dir, binstr_original, max_bytes, fast_forward
+	global save_dir, binstr_original, max_bytes, ff_target
 	strg = 		"[+] Packet info name: " + packet_info_name +"\n"
 	strg += 	"[+] Packet info Action Name:" + str( packet_info_action_name )+"\n"
 	strg += 	"[+] Packet info source :" + str( packet_info_source )+"\n"
@@ -416,7 +432,7 @@ def print_info():
 	strg += 	"[+] High byte:" + str(high_byte) +"\n"
 	strg += 	"[+] Path:" + save_dir +"\n"
 	strg += 	"[+] Length:" + str( max_bytes ) + "\n"
-	strg += 	"[+] Fast forward:" + str( fast_forward ) + "\n"
+	strg += 	"[+] Fast forward:" + str( ff_target ) + "\n"
 	strg += 	"\n"
 	print strg
 
