@@ -13,6 +13,7 @@ packet_info_number = '1'
 
 packet_count = 0
 
+glob_resp = None
 bin_stream = None
 bin_stream_original = None
 new_bin_stream = None
@@ -29,6 +30,8 @@ max_bytes = None
 fast_forward = None
 
 save_dir = '/root/Desktop/pentest/tools/skzproxy/save_packets'
+save_resp_dir = '/root/Desktop/pentest/tools/skzproxy/save_bytesender'
+
 sock = None
 fuzz_byte_list = list()
 fuzz_range_list= list()
@@ -65,7 +68,7 @@ def main( ):
 			None
 	
 	while True:
-		string = 	"(T)gt; (L)d, (E)dt, (R)str, (N)ew, (V)iew, (S)nd, (I)nf, (Q)t, re(C)nct\n"
+		string = 	"(T)gt; (L)d, (E)dt, (R)str, (N)w, (V)w, (S)nd, (I)nf, (Q)t, re(C)nct, S(a)ve Rsp.\n"
 		string += 	"FUZZ> F-setup, Z-fire, D-del; FO-see opts, ZO-set opts, FD-set delay, FV - verbose \n"
 		string += 	"> "
 		cmd = raw_input( string )
@@ -132,6 +135,10 @@ def main( ):
 			inet_set_target( )
 		elif cmd == 'I' or cmd == 'i':
 			print_info( )
+		elif cmd =='h' or cmd == 'H' or cmd == 'help' or cmd =='HELP' or cmd == 'Help':
+			help( )
+		elif cmd =='A' or cmd == 'a':
+			save_the_packet( )
 		elif cmd == 'S' or cmd == 's':
 			final = None
 			if bin_stream is None:
@@ -147,6 +154,83 @@ def main( ):
 		else:
 			None
 		print "\n"
+
+def save_the_packet():
+	global glob_resp, save_resp_dir
+	string = "Enter the name you want to save the packet as; q cancels; ret cancels \n>"
+	save_name = raw_input( string )
+	
+	if not bin_stream:
+		print "You need a Response!"
+	
+	if save_name == 'Q' or save_name == 'q':
+		return
+	elif not save_name:
+		return
+	else:
+		prompt = "Save as (a)ll or (b)in or (h)exdump? 'q' to cancel and ret to save as bin >"
+		format = raw_input( prompt )
+		
+		if format == 'q' or format == 'Q':
+			return
+		if len(format) > 1 :
+			format = 'b'
+		#todo this should be a parameter, if auto save format set skip this question.
+		
+		try:
+			save_file = save_resp_dir + '/' + save_name
+			
+			if format == 'h' or format == 'H':
+				fz = open( save_file + '.phex', "w+" )			
+				fz.write(   hexdump_stream_to_string( glob_resp )  )
+				fz.close()
+			elif format == 'b' or format == 'B':
+				fz = open( save_file +'.pbin', "wb+" )			
+				fz.write(   bytes( glob_resp )  )
+				fz.close()
+			elif format == 'a' or format == 'A':
+				#ugly hack
+				fz = open( save_file +'.pbin', "wb+" )			
+				fz.write(   bytes( glob_resp )  )
+				fz.close()
+				
+				fz2 = open( save_file + '.phex', "w+" )			
+				fz2.write(   hexdump_stream_to_string( glob_resp )  )
+				fz2.close()
+			else:
+				print "Bad format"
+				return
+			print "Saved your file %s as %s: " %(save_file, format)
+		except:
+			print "Failed to save your file: "+save_file
+	return
+			
+	
+def help():
+		string = "*** Skzproxy Bytesender ***\n"
+		string += 	"T\tTarget IP and port; this can also override the command line.\n"
+		string += 	"L\tPrint the file list and load a file (by number)\n"
+		string += 	"E\tEdit the packet\n"
+		string += 	"R\tReset the packet, discard changes made\n"
+		string += 	"N\tNew packet from scratch. \n"
+		string += 	"V\tView the packet"		#todo - the combined ascii and dec mode and just dec.
+		string += 	"S\tSEND THE PACKET\n"
+		string += 	"I\tInformation print\n"
+		string += 	"Q\tQuit\n"
+		string += 	"C\tReconnect to Target\n"
+		string += 	"A\tSave response\n"
+		string += 	"AS\tSave packet sent\n"
+		string += 	"--- --- --- --- --- --- --- --- --- --- ---\n"
+		string += 	"FUZZING MENU\n"
+		string += 	"F\tSetup the bytes to fuzz\n"
+		string += 	"Z\tFire the fuzzer\n"
+		string += 	"D\tDelete fuzzed bytes; also good to see what's set to fuzz\n"
+		string += 	"FO\tSee the fuzz setup\n"
+		string += 	"ZO\tSet the fuzz options\n"
+		string += 	"FD\tSetup a fuzz delay\n"
+		string += 	"FV\tSet the delay on the fuzzer\n"
+		string += 	"\n"
+		print string
 		
 def inet_setup_networking( ):
 	#setup local host listening parameters
@@ -165,7 +249,7 @@ def inet_setup_networking( ):
 	print "Connection OK..."
 	
 def inet_send_the_packet( ):
-	global sock, bin_stream, target_ip, target_port
+	global sock, bin_stream, target_ip, target_port, glob_resp
 	data = None
 	
 	try:
@@ -188,6 +272,7 @@ def inet_send_the_packet( ):
 		
 	try:
 		data = sock.recv(4096)
+		glob_resp = data
 		print "Received " + str(len(data)) + " bytes"
 	except:
 		print "Failed to receive response"
@@ -284,6 +369,22 @@ def hexdump_stream( src, length=16):
 		result.append( b"%04X %-*s %s" % (i, length*(digits + 1), hexa, text) )
 	print b'\n'.join(result)
 
+def hexdump_stream_to_string( src, length=16 ):
+	result = [ ]
+	digits = 4 if isinstance(src, unicode) else 2
+	
+	len_to_print = len(src)
+	for i in xrange(0, len_to_print, length):
+		s = src[i:i+length]
+		hexa = b' '.join(["%0*X" % (digits, ord(x)) for x in s])
+		text = b''.   join([x if 0x20 <= ord(x) < 0x7F else b'.' for x in s])
+
+		
+		result.append( b"%04X %-*s %s" % (i, length*(digits + 1), hexa, text) )
+	return b'\n'.join(result)
+
+	
+	
 def hexdump_to_string( src, range=0, length=16 ):
 	result = [ ]
 	digits = 4 if isinstance(src, unicode) else 2
