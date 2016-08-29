@@ -31,7 +31,6 @@ Once it's running you can view the packets over the wire, modify packets on the 
 save packets, dump as decimal or hex, etc.
 
 First you get the packet and you get the prompt:
-
 	Enter to continue, X to play w/ packet, f# or f to fast forward, q to quit, N for name >
 
 Simple interface; if you just want to watch the packet flow type ff and hit enter.  
