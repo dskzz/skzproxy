@@ -154,6 +154,7 @@ Here is the Fuzzer command listing
 For example, here we set up the fuzzing
 	Num -  0  1  2  3  4  5  6  7
 	Hex - 00 08 00 02 57 BF 8C 94
+
 	Pick bytes to fuzz, sep by space or , 0 - 8; Note only 1-16 displayed. 
 	> 3,5,7
 	Byte 3 Range to fuzz (##-## up to FF) or enter to do 0-FF
