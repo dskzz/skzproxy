@@ -81,7 +81,6 @@ with the current packet stream, bitsender allows a user to send customized bytes
 
 You can run the bitsender without any parameters - # bitsender.py  and set the target via the T command. 
 OR you can specify a target ip on the command line as such:
-
 	python skzproxy_bitsender.py 10.1.1.1 8080
 
 You can load a packet to work with from the ./save_packets/ folder; you are presented with a list of all files.
