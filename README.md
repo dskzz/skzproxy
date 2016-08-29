@@ -6,16 +6,13 @@ A proxy, packet sender and fuzzer originally based on the Black Hat Python proxy
 
 > ./skzproxy_bitsender.py
 
-*** NOTES *** 
-NOTE!!! and TODO - This uses hardcoded paths; this needs to be changed.
+##### NOTES #####
+	*** NOTE!!! and TODO - This uses hardcoded paths; this needs to be changed. ***
+	NOTE - All commands word in upper and lowercase.
+	NOTE - when you edit a packet, split it by spaces. XX means keep same value. for example:orig: 00 01 02 03 edit: xx 04 xx 05 new: 00 04 00 05
+	NOTE - The system esp the bitsender is optimized for protocols with 1-16 bytes at the top.
 
-NOTE - All commands word in upper and lowercase.
-
-NOTE - when you edit a packet, split it by spaces. XX means keep same value. for example:orig: 00 01 02 03 edit: xx 04 xx 05 new: 00 04 00 05
-
-NOTE - The system esp the bitsender is optimized for protocols with 1-16 bytes at the top.
-
-##### skzproxy.py #####
+##### SKZPROXY.PY #####
 So this is a program based on the proxy from the excellent Black Hat Python book.  
 Unfortunately, the book, while it left in functions for the user to modify packets, 
 it never went back and filled in those functions.  So being desirous to do so, I 
