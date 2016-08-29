@@ -25,7 +25,8 @@ produced this beast.
 It has two key files: skzproxy.py and skzproxy_bitsender.py (should really be bysender but hey...) 
 
 skzproxy runs exactly as you think it should, in the following format:
-skzproxy.py [localip, 0.0.0.0] [localport] [fwd-to-ip-addr] [fwd-to-port] [optional rcv first]
+
+	skzproxy.py [localip, 0.0.0.0] [localport] [fwd-to-ip-addr] [fwd-to-port] [optional rcv first]
 
 Once it's running you can view the packets over the wire, modify packets on the fly, 
 save packets, dump as decimal or hex, etc.
@@ -37,6 +38,7 @@ Simple interface; if you just want to watch the packet flow type ff and hit ente
 TODO - Implement the ff by #, rewind by # also help on this prompt.
 
 The X instruction brings up the interesting "Play with Packet" interface:
+
 	[?] 0-8; Range: R/S/L/E/def; Prt H/N/W; SO/[C]lear/[F]ire; Q/help/ret >help
 	(E)dit - Edit this range of bytes
 	(R)ange - Select a range of bytes to work with. *** First byte is 0
@@ -58,14 +60,17 @@ The X instruction brings up the interesting "Play with Packet" interface:
 
 The rest is pretty self explanitory and apart from wanting to add in a "repeat sending custom packets" feature
 is pretty much good to go. 
+
 TODO - add a "repeat sending custom packets" feature.
 
 What's interesting is how it saves the packets which is how it interacts with the bitsender...
 
 All packets that are saved - S - are saved in the ./save_packets/ folder in the format:
+
 	projectname-transaction_[R|L]####.pbin
 
 For example:
+
 	chal1-login_R0002_mod.pbin
 
 You can change the project name and the transaction name w/ N and NP.  
@@ -79,10 +84,12 @@ with the current packet stream, bitsender allows a user to send customized bytes
 
 You can run the bitsender without any parameters - # bitsender.py  and set the target via the T command. 
 OR you can specify a target ip on the command line as such:
+
 	python skzproxy_bitsender.py 10.1.1.1 8080
 
 You can load a packet to work with from the ./save_packets/ folder; you are presented with a list of all files.
 Enter the L command:
+
 	> l
 	1 - chal1-login_L0001_mod.pbin
 	2 - chal1-login_L0002_mod.pbin
@@ -105,6 +112,7 @@ Enter the L command:
 TODO - allow alternate ordering methods.
 
 You then pick your file and it will load the binary from the packet binary and dump the hex. 
+
 	Pick your file >2
 	Picked # 2 - chal1-login_L0002_mod.pbin
 	Loaded file /root/Desktop/pentest/tools/skzproxy/save_packets/chal1-login_L0002_mod.pbin
@@ -141,6 +149,7 @@ The fuzzer allows you to modify certain bytes and run a range for each from 00 -
 recursively go through every possible combination supplied by the user.
 
 Here is the Fuzzer command listing
+
 	FUZZING MENU
 	F	Setup the bytes to fuzz
 	Z	Fire the fuzzer
