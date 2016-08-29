@@ -1,0 +1,8 @@
+TODO - Maybe if I find it useful allow like XOR, OR, AND, NAND, etc on the packets.
+TODO - Make it so that, like x3 or x*3 = xx xx xx so we dont need to type all those xx's every time and on big packets.
+TODO - Maybe put the range picker into the bitsender.
+TODO - Fuzz templates
+TODO - Help menu in bitsender
+TODO - bitsender: Make it so you can auto-save all the packets; right now you have to keep hitting X, S, F.  Also save by name
+TODO - bitsender: Search packet files; 
+TODO - fast forward (auto load next packet in sequence), save responses, dump in dec and (ALL) also dump combined. 
