@@ -115,6 +115,7 @@ You then pick your file and it will load the binary from the packet binary and d
 	0000 00 08 00 02 57 BF 8C 94                          ....W...
 
 Alternatively, you can specify the packet to load on the command line; load file 2 w/ 
+
 	python skzproxy_bitsender.py 10.1.1.1 8080 2
 
 You can also create a new packet from scratch with the N command.  
