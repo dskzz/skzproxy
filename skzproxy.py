@@ -400,17 +400,31 @@ def process_edit( line ):
 	elif high_byte:
 		bottom_of_orig = low_byte
 		for index in range( 0, count ):
+#			print "Current count %d of %d" %(index, count)
+			if index >= count:
+				return
 			target = int(bottom_of_orig) + int(index)
 			if entries[index] == 'x' or entries[index] == 'X' or entries[index] == 'xx' or entries[index] == 'XX':
 				continue
+				
+				
+			# allows deleting w/ a zz but note wont reload changes!!!  It's a little hinky.
+			if entries[index] == 'zz' or entries[index] == 'ZZ' or entries[index]=='z' or entries[index]=='Z':
+				print "Marked as delete %d" %index
+				del binstr_new[target]
+				del entries[index]
+				index -= 1
+				count -= 1
+#				print " - After delete: ind %d cnt %d" %(index, count)
+				continue
 			
+			print " - At change byte: ind %d cnt %d" %(index, count)
 			if re.search(hexaPattern, entries[index]):
 				return -1
 			else:
 				new_val = int( entries[index], 16 )
 				print "Change " + str(binstr_new[target]) + " to " + hex(new_val)
 				binstr_new[target] = new_val
-				
 				#binstr_new[target] = entries[index]
 	else:
 		print "full"

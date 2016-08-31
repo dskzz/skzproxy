@@ -434,6 +434,7 @@ def edit_packet( ):
 	mod = raw_input( prompt)
 	if mod == "":
 		return
+
 	edit_process_edit( mod )
 		
 
@@ -453,13 +454,25 @@ def edit_process_edit( line ):
 	hexaPattern = "\s--[0-9a-fA-F]+[--]?\s"
 	#editing single byte	
 	for index in range( 0, count ):
+		print "Current count %d of %d" %(index, count)
+		if index >= count:
+			return
+		
 		target = int(index)
 			
 		if entries[index] == 'x' or entries[index] == 'X' or entries[index] == 'xx' or entries[index] == 'XX':
 				continue
 		
-		entries[index] = is_this_valid_hex( entries[index] )
+		if entries[index] == 'zz' or entries[index] == 'ZZ' or entries[index]=='z' or entries[index]=='Z':
+			print "Marked as delete %d"%index
+			del bin_stream[target]
+			del entries[index]
+			index -= 1
+			count -= 1
+			continue
 		
+		entries[index] = is_this_valid_hex( entries[index] )
+			
 		new_val = int( entries[index], 16 )
 		print "Change " + str( bin_stream[target] ) + " to " + hex(new_val)
 		bin_stream[target] = new_val
