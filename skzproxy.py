@@ -1,8 +1,22 @@
+#!/usr/bin/python
+import inspect
 import os
 import sys, io
 import re
 import socket
 import threading
+#
+# Helper functions
+#
+def get_script_dir(follow_symlinks=True):
+    if getattr(sys, 'frozen', False): # py2exe, PyInstaller, cx_Freeze
+        path = os.path.abspath(sys.executable)
+    else:
+        path = inspect.getabsfile(get_script_dir)
+    if follow_symlinks:
+        path = os.path.realpath(path)
+    return os.path.dirname(path)
+
 
 # 
 # Globals
@@ -33,7 +47,11 @@ max_bytes = None
 ff_target = 0
 ff_all = None
 
-save_dir = '/root/Desktop/pentest/tools/skzproxy/save_packets'
+#save_dir = os.path.dirname(os.path.abspath(__file__)) + '/save_packets'
+#save_resp_dir = os.path.dirname(os.path.abspath(__file__))   +  '/save_bytesender'
+
+save_dir = get_script_dir( )+ '/save_packets'
+save_resp_dir = get_script_dir( )   +  '/save_bytesender'
 
 def out( string_to_print , text_for_prompt="+" ):
 	print "[%s] %s\n" %( text_for_prompt, string_to_print)

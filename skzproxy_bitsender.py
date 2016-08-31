@@ -1,9 +1,24 @@
+#!/usr/bin/python
+import inspect
 import os
 import sys, io
 import re
 import socket
 import threading
 import difflib
+#
+# Helper functions
+#
+def get_script_dir(follow_symlinks=True):
+    if getattr(sys, 'frozen', False): # py2exe, PyInstaller, cx_Freeze
+        path = os.path.abspath(sys.executable)
+    else:
+        path = inspect.getabsfile(get_script_dir)
+    if follow_symlinks:
+        path = os.path.realpath(path)
+    return os.path.dirname(path)
+
+
 # 
 # Globals
 # 
@@ -29,8 +44,10 @@ max_bytes = None
 
 fast_forward = None
 
-save_dir = '/root/Desktop/pentest/tools/skzproxy/save_packets'
-save_resp_dir = '/root/Desktop/pentest/tools/skzproxy/save_bytesender'
+
+save_dir = get_script_dir( )+ '/save_packets'
+save_resp_dir = get_script_dir( )   +  '/save_bytesender'
+
 
 sock = None
 fuzz_byte_list = list()
@@ -427,7 +444,7 @@ def edit_custom_packet( ):
 	
 def edit_packet( ):
 	global bin_stream
-	prompt = 	"Enter new string.  Type x or X for each byte to remain same or new val. "
+	prompt = 	"Enter new string.  Type x or X for each byte to remain same or new val; zz to delete (a little hinky) "
 	prompt +=	"If you shorten str, will fill with existing vals. Blank ret when done\n"
 	prompt +=	 " " + hexdump_to_string( bin_stream, 16 ) + "\n>"
 	
