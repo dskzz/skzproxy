@@ -22,3 +22,7 @@ TODO - proxy - I think the editor just shows the last byte row not the first
 TODO - project - Mark the more vital packets like login as non-update but keep some in for samples
 TODO - project - some sort of better saved packet manager.
 TODO - proxy - test other save methods
+TODO - both - probably a good idea to do like a central input checker, to quit.
+	- 1 for hex entry
+	- 1 for command entry
+
