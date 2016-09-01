@@ -1,8 +1,21 @@
-TODO - Maybe if I find it useful allow like XOR, OR, AND, NAND, etc on the packets.
-TODO - Make it so that, like x3 or x*3 = xx xx xx so we dont need to type all those xx's every time and on big packets.
-TODO - Maybe put the range picker into the bitsender.
-TODO - Fuzz templates
-TODO - Help menu in bitsender
+TODO - proxy - Implement the ff by #, rewind by # also help on this prompt.
+TODO - both - add a "repeat sending custom packets" feature.
+TODO - proxy - Save all command.
+TODO - bitsender - allow alternate ordering methods in load bytsender
+TODO - both - Maybe if I find it useful allow like XOR, OR, AND, NAND, etc on the packets.
+TODO - both - Make it so that, like x3 or x*3 = xx xx xx so we dont need to type all those xx's every time and on big packets.
+TODO - bitsender - Maybe put the range picker into the bitsender.
+TODO - fuzzer - Fuzz templates
+TODO - fuzzer - Finish the fuzz output system.
+TODO - bitsender - Help menu in bitsender
 TODO - bitsender: Make it so you can auto-save all the packets; right now you have to keep hitting X, S, F.  Also save by name
 TODO - bitsender: Search packet files; 
-TODO - fast forward (auto load next packet in sequence), save responses, dump in dec and (ALL) also dump combined. 
+TODO - proxy - fast forward (auto load next packet in sequence), 
+DONE - proxy - fast forward all 
+TODO - proxy - rewind all and spec number
+DONE - proxy - save responses
+DONE - Get off the hard coded directories
+TODO - dump in dec and (ALL) also dump combined. 
+TODO - fuzzer - fix fuzz delete output display to make sure the range shows 5 chars
+TODO - both - Maybe centralize the editing functions; range picker for both...maybe OOP it.
+TODO - proxy - I think the editor just shows the last byte row not the first
