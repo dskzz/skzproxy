@@ -1,0 +1,4 @@
+save_packets/*.p*
+save_bytesender/*.p*
+save_packets/*.conf
+save_bytesender/*.conf
