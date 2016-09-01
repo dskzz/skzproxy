@@ -19,3 +19,6 @@ TODO - dump in dec and (ALL) also dump combined.
 TODO - fuzzer - fix fuzz delete output display to make sure the range shows 5 chars
 TODO - both - Maybe centralize the editing functions; range picker for both...maybe OOP it.
 TODO - proxy - I think the editor just shows the last byte row not the first
+TODO - project - Mark the more vital packets like login as non-update but keep some in for samples
+TODO - project - some sort of better saved packet manager.
+TODO - proxy - test other save methods
