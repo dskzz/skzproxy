@@ -68,7 +68,7 @@ All packets that are saved - S - are saved in the ./save_packets/ folder in the 
 
 For example:
 
-	chal1-login_R0002_mod.pbin
+	proj1-login_R0002_mod.pbin
 
 You can change the project name and the transaction name w/ N and NP.  
 TODO - Save all command.
@@ -111,8 +111,8 @@ You then pick your file and it will load the binary from the packet binary and d
 
 	Pick your file >2
 	Picked # 2 - chal1-login_L0002_mod.pbin
-	Loaded file /root/Desktop/pentest/tools/skzproxy/save_packets/chal1-login_L0002_mod.pbin
-	0000 00 08 00 02 57 BF 8C 94                          ....W...
+	Loaded file /root/Desktop/pentest/tools/skzproxy/save_packets/proj1-login_L0002_mod.pbin
+	0000 00 00 FF 00 0A 0B 0C 00                          ........
 
 Alternatively, you can specify the packet to load on the command line; load file 2 w/ 
 
@@ -158,7 +158,7 @@ Here is the Fuzzer command listing
 
 For example, here we set up the fuzzing
 	Num -  0  1  2  3  4  5  6  7
-	Hex - 00 08 00 02 57 BF 8C 94
+	Hex - 00 00 00 FF AA BB CC DD
 
 	Pick bytes to fuzz, sep by space or , 0 - 8; Note only 1-16 displayed. 
 	> 3,5,7
