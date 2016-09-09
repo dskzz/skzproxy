@@ -87,23 +87,23 @@ You can load a packet to work with from the ./save_packets/ folder; you are pres
 Enter the L command:
 
 	> l
-	1 - chal1-login_L0001_mod.pbin
-	2 - chal1-login_L0002_mod.pbin
-	3 - chal1-login_L0003_mod.pbin
-	4 - chal1-login_L0004_mod.pbin
-	5 - chal1-login_L0005_mod.pbin
-	6 - chal1-login_L0006_mod.pbin
-	7 - chal1-login_L0007_mod.pbin
-	8 - chal1-login_L0011_mod.pbin
-	9 - chal1-login_R0001_mod.pbin
-	10 - chal1-login_R0002_mod.pbin
-	11 - chal1-login_R0003_mod.pbin
-	12 - chal1-login_R0004_mod.pbin
-	13 - chal1-login_R0005_mod.pbin
-	14 - chal1-login_R0006_mod.pbin
-	15 - chal1-login_R0007_mod.pbin
-	16 - chal1-login_R0119_mod.pbin
-	17 - chal1-sale_L0021_mod.pbin
+	1 - proj1-login_L0001_mod.pbin
+	2 - proj1-login_L0002_mod.pbin
+	3 - proj1-login_L0003_mod.pbin
+	4 - proj1-login_L0004_mod.pbin
+	5 - proj1-login_L0005_mod.pbin
+	6 - proj1-login_L0006_mod.pbin
+	7 - proj1-login_L0007_mod.pbin
+	8 - proj1-login_L0011_mod.pbin
+	9 - proj1-login_R0001_mod.pbin
+	10 - proj1-login_R0002_mod.pbin
+	11 - proj1-login_R0003_mod.pbin
+	12 - proj1-login_R0004_mod.pbin
+	13 - proj1-login_R0005_mod.pbin
+	14 - proj1-login_R0006_mod.pbin
+	15 - proj1-login_R0007_mod.pbin
+	16 - proj1-login_R0119_mod.pbin
+	17 - proj1-sale_L0021_mod.pbin
 
 TODO - allow alternate ordering methods.
 
