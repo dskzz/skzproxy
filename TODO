@@ -25,4 +25,4 @@ TODO - proxy - test other save methods
 TODO - both - probably a good idea to do like a central input checker, to quit.
 	- 1 for hex entry
 	- 1 for command entry
-
+TODO - setup a seperate display method for showing HTML streams.
